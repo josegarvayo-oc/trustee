@@ -47,7 +47,7 @@ pub struct AzSnpVtpm {
 #[derive(Error, Debug)]
 pub enum CertError {
     #[error("Failed to load Milan cert chain")]
-    LoadMilanCert,
+    LoadGenoaCert,
     #[error("TPM quote nonce doesn't match expected report_data")]
     NonceMismatch,
     #[error("SNP report report_data mismatch")]
@@ -66,8 +66,8 @@ pub enum CertError {
 impl AzSnpVtpm {
     pub fn new() -> Result<Self, CertError> {
         let vendor_certs = CERT_CHAINS
-            .get(&ProcessorGeneration::Milan)
-            .ok_or(CertError::LoadMilanCert)?
+            .get(&ProcessorGeneration::Genoa)
+            .ok_or(CertError::LoadGenoaCert)?
             .clone();
         Ok(Self {
             vendor_certs: AzVendorCertificates {
